@@ -1,0 +1,34 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "types": [
+      "vue",
+      "@nuxt/types",
+      "@nuxtjs/tailwindcss",
+      "node"
+    ],
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "#utils/*": ["./server/utils/*"],
+      "#utils/db": ["./server/utils/db.ts"],
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "~~/*": ["./*"],
+      "@@/*": ["./*"]
+    },
+    "lib": ["ES2015"],
+    "types": [
+      "node",
+      "./types/index.d.ts"
+    ],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  }
+}

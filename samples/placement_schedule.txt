@@ -1,0 +1,2 @@
+Gantt Chart Format Example:
+FarmA-House12 |=== Running ===| 2025-01-01 ── 2026-08-15

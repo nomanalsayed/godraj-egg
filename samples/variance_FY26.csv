@@ -1,0 +1,5 @@
+metric,actual,forecast,delta,percent_delta
+he_lac,80.0,81.84,-1.84,-2.25%
+doc_lac,68.8,70.38,-1.58,-2.25%
+feed_tons,92.5,95.0,-2.5,-2.63%
+livability_pct,99.5,99.8,-0.3,-0.30%
