@@ -1,13 +1,17 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold mb-6">Budget & Variance</h1>
+    <h1 class="text-3xl font-bold mb-6">
+      Budget & Variance
+    </h1>
 
     <div class="bg-white p-6 rounded-lg shadow mb-6">
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold">Budget vs Actuals Variance Analysis</h2>
+        <h2 class="text-2xl font-bold">
+          Budget vs Actuals Variance Analysis
+        </h2>
         <div class="flex items-center gap-4">
           <button class="btn btn-primary">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
             Upload SAP Actuals
           </button>
         </div>
@@ -17,16 +21,28 @@
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th v-for="header in headers" :key="header" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ header }}</th>
+              <th v-for="header in headers" :key="header" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {{ header }}
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr v-for="item in budgetData" :key="item.category">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ item.category }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.budget.toLocaleString() }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.actual.toLocaleString() }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm" :class="getVariance(item).class">{{ getVariance(item).value.toLocaleString() }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm" :class="getVariance(item).class">{{ getVariance(item).percentage.toFixed(2) }}%</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                {{ item.category }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ item.budget.toLocaleString() }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ item.actual.toLocaleString() }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm" :class="getVariance(item).class">
+                {{ getVariance(item).value.toLocaleString() }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm" :class="getVariance(item).class">
+                {{ getVariance(item).percentage.toFixed(2) }}%
+              </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm">
                 <span :class="getStatus(getVariance(item).percentage).class" class="px-2 py-1 text-xs font-semibold rounded-full">{{ getStatus(getVariance(item).percentage).text }}</span>
               </td>
@@ -37,13 +53,17 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="bg-gray-50 p-4 rounded-lg h-96 flex flex-col">
-          <h3 class="text-lg font-semibold mb-2">Budget vs Actual Comparison</h3>
+          <h3 class="text-lg font-semibold mb-2">
+            Budget vs Actual Comparison
+          </h3>
           <div class="flex-1">
             <Bar :data="barChartData" :options="chartOptions" />
           </div>
         </div>
         <div class="bg-gray-50 p-4 rounded-lg h-96 flex flex-col">
-          <h3 class="text-lg font-semibold mb-2">Cost Breakdown</h3>
+          <h3 class="text-lg font-semibold mb-2">
+            Cost Breakdown
+          </h3>
           <div class="flex-1">
             <Pie :data="pieChartData" :options="chartOptions" />
           </div>
@@ -59,7 +79,7 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Li
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement)
 
-const { data: apiData } = await useFetch('/api/budget')
+const { data: apiData } = await useFetch<{ data: BudgetData[] }>('/api/budget')
 
 const budgetData = computed(() => apiData.value?.data || [])
 
@@ -70,7 +90,7 @@ const getVariance = (item: any) => {
   const percentage = (variance / item.budget) * 100
   return {
     value: variance,
-    percentage: percentage,
+    percentage,
     class: variance > 0 ? 'text-green-600' : 'text-red-600'
   }
 }

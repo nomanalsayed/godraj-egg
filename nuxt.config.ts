@@ -2,11 +2,16 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  
+
   modules: [
     '@nuxtjs/tailwindcss'
   ],
-  
+
+  alias: {
+    '#utils/auth': './server/utils/auth.ts',
+    '#utils/db': './server/utils/db.ts'
+  },
+
   typescript: {
     strict: true,
     typeCheck: true,
@@ -19,9 +24,9 @@ export default defineNuxtConfig({
       }
     }
   },
-  
+
   css: ['~/assets/css/main.css'],
-  
+
   app: {
     head: {
       title: 'Godrej Egg Production Forecasting',
@@ -32,7 +37,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-  
+
   nitro: {
     experimental: {
       database: true

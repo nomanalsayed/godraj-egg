@@ -1,48 +1,59 @@
 import { initDatabase } from '#utils/db'
-import { existsSync } from 'fs'
-import { join } from 'path'
 
-async function main() {
+async function main () {
   console.log('Starting database initialization...')
-  
-  try {
-    // Verify CSV file exists
-    const csvPath = join(process.cwd(), 'data', 'weekly-data.csv')
-    if (!existsSync(csvPath)) {
-      throw new Error(`CSV file not found at ${csvPath}`)
-    }
 
+  try {
     // Initialize database
     const db = await initDatabase()
     console.log('Database initialized successfully!')
-    
-    // Verify data insertion
-    // Create standards table using raw SQL
+
+    // Create farm_units table
     db.exec(`
-      CREATE TABLE IF NOT EXISTS standards (
-        week INTEGER PRIMARY KEY,
-        male REAL,
-        female REAL,
-        avg_fem REAL,
-        m_house_ps REAL,
-        select_he REAL,
-        lirm1 REAL,
-        lirm2 REAL,
-        lirm3 REAL,
-        hhhe_ps1 REAL,
-        hhhe_ps2 REAL,
-        depletion REAL,
-        cumm_depl REAL,
-        livability REAL,
-        hand_wk_he REAL,
-        he_w_b REAL,
-        hhhe_cumm REAL
+      CREATE TABLE IF NOT EXISTS farm_units (
+        id TEXT PRIMARY KEY,
+        name TEXT UNIQUE,
+        status TEXT
       )
     `)
 
-    const rowCount = db.prepare('SELECT COUNT(*) as count FROM parent_stock').get() as { count: number }
-    console.log(`Inserted ${rowCount.count} parent stock records`)
-    
+    // Create houses table
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS houses (
+        id TEXT PRIMARY KEY,
+        unit_id TEXT,
+        house_number INTEGER,
+        label TEXT,
+        capacity_ps INTEGER,
+        status TEXT,
+        FOREIGN KEY (unit_id) REFERENCES farm_units (id)
+      )
+    `)
+
+    // Create placements table
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS placements (
+        id TEXT PRIMARY KEY,
+        unit_id TEXT,
+        house_id TEXT,
+        ps_quantity_planned INTEGER,
+        ps_quantity_actual INTEGER,
+        date_in TEXT,
+        date_lay TEXT,
+        date_cull TEXT,
+        date_ready_next TEXT,
+        gap_weeks INTEGER,
+        remarks TEXT,
+        origin TEXT,
+        status TEXT,
+        fiscal_year TEXT,
+        FOREIGN KEY (unit_id) REFERENCES farm_units (id),
+        FOREIGN KEY (house_id) REFERENCES houses (id)
+      )
+    `)
+
+    console.log('Tables created successfully!')
+
     db.close()
   } catch (error) {
     console.error('Initialization failed with error:')
@@ -52,8 +63,6 @@ async function main() {
       console.error(error.stack)
     }
     process.exit(1)
-  } finally {
-    process.exit(0)
   }
 }
 

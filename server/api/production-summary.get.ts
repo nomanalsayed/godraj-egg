@@ -1,4 +1,3 @@
-
 export default defineEventHandler(() => {
   return {
     data: [
@@ -13,7 +12,7 @@ export default defineEventHandler(() => {
       { month: 'Sep', fy26_he: 1.9, fy27_he: 2.0, fy28_he: 2.1, fy29_he: 2.2, fy30_he: 2.3, hatchability: 86, fy26_doc: 1.63, fy27_doc: 1.72, fy28_doc: 1.81, fy29_doc: 1.89, fy30_doc: 1.98 },
       { month: 'Oct', fy26_he: 2.0, fy27_he: 2.1, fy28_he: 2.2, fy29_he: 2.3, fy30_he: 2.4, hatchability: 86, fy26_doc: 1.72, fy27_doc: 1.81, fy28_doc: 1.89, fy29_doc: 1.98, fy30_doc: 2.06 },
       { month: 'Nov', fy26_he: 2.1, fy27_he: 2.2, fy28_he: 2.3, fy29_he: 2.4, fy30_he: 2.5, hatchability: 86, fy26_doc: 1.81, fy27_doc: 1.89, fy28_doc: 1.98, fy29_doc: 2.06, fy30_doc: 2.15 },
-      { month: 'Dec', fy26_he: 2.2, fy27_he: 2.3, fy28_he: 2.4, fy29_he: 2.5, fy30_he: 2.6, hatchability: 86, fy26_doc: 1.89, fy27_doc: 1.98, fy28_doc: 2.06, fy29_doc: 2.15, fy30_doc: 2.24 },
+      { month: 'Dec', fy26_he: 2.2, fy27_he: 2.3, fy28_he: 2.4, fy29_he: 2.5, fy30_he: 2.6, hatchability: 86, fy26_doc: 1.89, fy27_doc: 1.98, fy28_doc: 2.06, fy29_doc: 2.15, fy30_doc: 2.24 }
     ]
   }
 })

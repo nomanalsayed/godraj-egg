@@ -1,4 +1,3 @@
-
 export default defineEventHandler(() => {
   return {
     data: [
@@ -37,7 +36,7 @@ export default defineEventHandler(() => {
         gap_weeks: 3,
         remarks: 'Awaiting new batch',
         status: 'ready'
-      },
+      }
     ]
   }
 })

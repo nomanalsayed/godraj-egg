@@ -1,5 +1,6 @@
-import { H3Event } from 'h3'
+import { H3Event, createError, readBody } from 'h3'
 import { getDatabase } from '~/server/utils/db'
+import { validateParentStockInput } from '~/server/utils/validation'
 
 export default defineEventHandler(async (event: H3Event) => {
   const body = await readBody<{
@@ -10,9 +11,16 @@ export default defineEventHandler(async (event: H3Event) => {
   }>(event)
   const db = getDatabase()
 
+  const errors = validateParentStockInput(body)
+  if (errors.length > 0) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Bad Request',
+      data: { errors }
+    })
+  }
+
   try {
-    validateInput(body)
-    
     if (body.type === 'parent_stock') {
       db.prepare(`
         INSERT INTO parent_stock (age, week_date, birds)
@@ -24,7 +32,7 @@ export default defineEventHandler(async (event: H3Event) => {
         VALUES (?, ?, 'MANUAL_ENTRY', ?)
       `).run(body.age, body.week_date, body.value)
     }
-    
+
     return { success: true }
   } catch (err) {
     const error = err as Error
@@ -34,12 +42,3 @@ export default defineEventHandler(async (event: H3Event) => {
     })
   }
 })
-
-function validateInput(data: any) {
-  if (!data.age || !data.week_date || !data.value) {
-    throw new Error('Missing required fields')
-  }
-  if (isNaN(data.age) || isNaN(data.value)) {
-    throw new Error('Invalid numeric values')
-  }
-}

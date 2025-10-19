@@ -1,13 +1,8 @@
-interface User {
-  id: string
-  name: string
-  roles: string[]
-  email: string
-}
+import type { User } from '~/types'
 
 export const useAuthUser = () => {
   // Mock user for development - remove in production
-  return useState('authUser', () => ({
+  return useState<User | null>('authUser', () => ({
     id: 'admin-001',
     name: 'Admin User',
     roles: ['Admin'],
@@ -17,14 +12,19 @@ export const useAuthUser = () => {
 
 export const useAuth = () => {
   const user = useAuthUser()
+
+  const hasRole = (role: string) => user.value?.roles?.includes(role) || false
   
   return {
     user,
-    login: () => user.value = {
-      id: 'admin-001',
-      name: 'Admin User', 
-      roles: ['Admin'],
-      email: 'admin@example.com'
+    hasRole,
+    login: () => {
+      user.value = {
+        id: 'admin-001',
+        name: 'Admin User',
+        roles: ['Admin'],
+        email: 'admin@example.com'
+      }
     },
     logout: () => { user.value = null }
   }

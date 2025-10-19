@@ -1,4 +1,3 @@
-
 export default defineEventHandler(() => {
   return {
     data: [
@@ -7,7 +6,7 @@ export default defineEventHandler(() => {
       { category: 'Hatchery Cost', budget: 250000, actual: 240000 },
       { category: 'Overhead Cost', budget: 300000, actual: 310000 },
       { category: 'DOC Sale', budget: 2500000, actual: 2600000 },
-      { category: 'Other Income', budget: 50000, actual: 45000 },
+      { category: 'Other Income', budget: 50000, actual: 45000 }
     ]
   }
 })

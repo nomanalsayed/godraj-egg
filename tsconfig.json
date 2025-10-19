@@ -8,14 +8,12 @@
       "@nuxtjs/tailwindcss",
       "node"
     ],
-    "moduleResolution": "node",
     "target": "ES2022",
-    "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "#utils/*": ["./server/utils/*"],
+      "#utils/auth": ["./server/utils/auth.ts"],
       "#utils/db": ["./server/utils/db.ts"],
       "~/*": ["./*"],
       "@/*": ["./*"],
@@ -23,12 +21,11 @@
       "@@/*": ["./*"]
     },
     "lib": ["ES2015"],
-    "types": [
-      "node",
-      "./types/index.d.ts"
-    ],
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true
-  }
+  },
+  "include": [
+    "types/index.d.ts"
+  ]
 }

@@ -1,16 +1,21 @@
-import { defineEventHandler } from 'h3'
-import { createError } from 'h3'
-import { calculateReports } from '~~/server/utils/db'
+import { defineEventHandler, createError } from 'h3'
+import { calculateReports } from '~/server/utils/db'
 
 export default defineEventHandler(async () => {
   try {
-    const reportData = await calculateReports()
-    return reportData
-  } catch (error) {
+    if (typeof calculateReports !== 'function') {
+      throw createError({
+        statusCode: 501,
+        statusMessage: 'Not Implemented',
+        data: 'calculateReports is not a function'
+      })
+    }
+    return calculateReports()
+  } catch (error: any) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Failed to generate reports',
-      data: error
+      statusMessage: 'Failed to calculate reports',
+      data: error.message
     })
   }
 })

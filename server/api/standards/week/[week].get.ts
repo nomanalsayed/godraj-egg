@@ -1,15 +1,19 @@
 import { defineEventHandler } from 'h3'
-import { getSingleWeekStandard, type APIStandardWeek } from '../../../utils/db'
+import { getSingleWeekStandard } from '#utils/db'
+import { checkRole } from '#utils/auth'
 
 export default defineEventHandler(async (event) => {
-  const user = event.context.user
-  if (!user) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized',
-      message: 'Authentication required'
-    })
-  }
+  // const user = event.context.user
+  // if (!user) {
+  //   throw createError({
+  //     statusCode: 401,
+  //     statusMessage: 'Unauthorized',
+  //     message: 'Authentication required'
+  //   })
+  // }
+
+  // await checkRole(event, ['Admin', 'Planner', 'Viewer'])
+
 
   const weekParam = event.context.params?.week
   if (!weekParam) {
@@ -19,7 +23,7 @@ export default defineEventHandler(async (event) => {
       message: 'Week parameter is required'
     })
   }
-  
+
   const week = parseInt(weekParam)
   if (isNaN(week) || week < 1 || week > 71) {
     throw createError({

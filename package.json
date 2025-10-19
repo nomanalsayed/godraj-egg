@@ -3,17 +3,19 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "nuxt dev",
+    "dev": "npm run init-db && nuxt dev",
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "init-db": "node scripts/js/init-db.js",
+    "init-db": "ts-node scripts/init-db.ts",
     "typecheck": "vue-tsc --noEmit"
   },
+  "imports": {
+    "#utils/db": "./server/utils/db.ts"
+  },
   "dependencies": {
-    "@vueuse/core": "^13.9.0",
     "apexcharts": "^5.3.5",
     "axios": "^1.12.2",
     "better-sqlite3": "^12.4.1",
@@ -27,10 +29,12 @@
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^3.0.2",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^24.8.0",
     "@types/papaparse": "^5.3.16",
+    "eslint": "^8.57.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsup": "^8.5.0",

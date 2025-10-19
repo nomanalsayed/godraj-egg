@@ -1,0 +1,2 @@
+unit_name,house_name,ps_quantity_planned,ps_quantity_actual,date_in,date_lay,date_cull,date_ready_next,gap_weeks,remarks,source_batch,origin,fiscal_year
+Unit-1,House-1,9500,9450,2025-01-15,2025-06-20,2026-07-10,2026-08-01,,On track,Batch-01,Local,FY26

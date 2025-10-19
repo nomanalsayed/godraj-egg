@@ -1,8 +1,9 @@
-import { updateStandards } from '~~/server/utils/db'
+import { defineEventHandler, readBody, createError } from 'h3'
+import { upsertWeekStandards, Standard } from '#utils/db'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  
+
   // Validate required fields
   const requiredFields = [
     'week', 'male', 'female', 'avg_fem', 'm_house_ps',
@@ -10,7 +11,7 @@ export default defineEventHandler(async (event) => {
     'hhhe_ps1', 'hhhe_ps2', 'depletion',
     'cumm_depl', 'livability', 'hand_wk_he', 'he_w_b', 'hhhe_cumm'
   ]
-  
+
   for (const field of requiredFields) {
     if (body[field] === undefined || body[field] === null) {
       throw createError({
@@ -22,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Convert single record to array format expected by updateStandards
-    await updateStandards([{
+    await upsertWeekStandards([{
       week: Number(body.week),
       male: Number(body.male),
       female: Number(body.female),
@@ -40,7 +41,7 @@ export default defineEventHandler(async (event) => {
       hand_wk_he: Number(body.hand_wk_he),
       he_w_b: Number(body.he_w_b),
       hhhe_cumm: Number(body.hhhe_cumm)
-    }]) // Removed second argument causing type error
+    } as Standard]) // Explicitly cast to Standard type
 
     return { status: 'success' }
   } catch (error) {
